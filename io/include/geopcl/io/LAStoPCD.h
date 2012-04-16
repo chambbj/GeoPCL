@@ -1,5 +1,10 @@
-#ifndef INCLUDED_LAStoPCD_H
-#define INCLUDED_LAStoPCD_H
+/*
+ * Inspired, and partially borrowed from VTK_PCL_Conversions
+ * https://github.com/daviddoria/VTK_PCL_Conversions
+ */
+
+#ifndef INCLUDED_LAStoPCD_HPP
+#define INCLUDED_LAStoPCD_HPP
 
 #include <fstream>
 #include <string>
@@ -47,24 +52,43 @@ namespace geopcl
 
     if (has_x && has_y && has_z)
     {
+      reader.Reset();
       for (size_t i = 0; i < cloud.points.size(); ++i)
       {
         reader.ReadNextPoint();
         liblas::Point const& q = reader.GetPoint();
 
         typename CloudT::PointType p = cloud.points[i];
-        pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "x", q.GetX()));
-        pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "y", q.GetY()));
-        pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "z", q.GetZ()));
+        pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "x", static_cast<float>(q.GetX())));
+        pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "y", static_cast<float>(q.GetY())));
+        pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "z", static_cast<float>(q.GetZ())));
         cloud.points[i] = p;
       }
     }
 
-    // same for intensity
+    bool has_i = false;
+    float i_val = 0.0f;
+    pcl::for_each_type<FieldList> (pcl::CopyIfFieldExists<typename CloudT::PointType, float> (testPoint, "intensity", has_i, i_val));
 
-    // same for RGB
+    if (has_i)
+    {
+      reader.Reset();
+      for (size_t i = 0; i < cloud.points.size(); ++i)
+      {
+        reader.ReadNextPoint();
+        liblas::Point const& q = reader.GetPoint();
+
+        typename CloudT::PointType p = cloud.points[i];
+        pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "intensity", static_cast<float>(q.GetIntensity())));
+        cloud.points[i] = p;
+      }
+    }
+
+    // same for RGB - although there is a mismatch between PCL's assumption
+    // that RGB will be 8 bits/channel and LAS's specification that RGB will be
+    // 16 bits/channel
   }
 }  // geopcl
 
-#endif  // INCLUDED_LAStoPCD_H
+#endif  // INCLUDED_LAStoPCD_HPP
 

@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 
   std::cout << "Reading " << input << " and writing " << output << std::endl;
 
-  pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
+  pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
 
   geopcl::LAStoPCD(input, *cloud);
 
