@@ -57,8 +57,15 @@ link_directories(${LIBLAS_LIBRARY_DIRS})
 add_definitions(${LIBLAS_DEFINITIONS})
 
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
+
 set(LASTOPCD lastopcd)
 add_executable(${LASTOPCD} apps/LAStoPCD.cpp)
 target_link_libraries(${LASTOPCD} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
-install(TARGETS ${LASTOPCD}
+
+set(PCDTOLAS pcdtolas)
+add_executable(${PCDTOLAS} apps/PCDtoLAS.cpp)
+target_link_libraries(${PCDTOLAS} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
+
+install(TARGETS ${LASTOPCD} ${PCDTOLAS}
   RUNTIME DESTINATION ${INSTALL_DIR})
+

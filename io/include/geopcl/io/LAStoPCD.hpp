@@ -20,7 +20,7 @@ namespace geopcl
   /**
    * \brief Convert LAS point cloud to PCD.
    *
-   * Converts LAS data to a coordinate-only PointXYZ PCD format.
+   * Converts LAS data to PCD format.
    */
   template <typename CloudT>
   void LAStoPCD(const std::string &input, CloudT &cloud)
