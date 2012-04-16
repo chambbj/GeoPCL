@@ -3,7 +3,7 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 
-#include <geopcl/io/LAStoPCD.h>
+#include <geopcl/io/LAStoPCD.hpp>
 
 int main(int argc, char** argv)
 {
