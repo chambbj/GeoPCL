@@ -3,6 +3,8 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 
+#include <liblas/liblas.hpp>
+
 #include <geopcl/io/PCDtoLAS.hpp>
 
 int main(int argc, char** argv)
@@ -27,7 +29,8 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  geopcl::PCDtoLAS(output, *cloud);
+  liblas::Header header;
+  geopcl::PCDtoLAS(output, header, *cloud);
 
   return 0;
 }

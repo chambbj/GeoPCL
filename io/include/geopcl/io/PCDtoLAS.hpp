@@ -27,7 +27,7 @@ namespace geopcl
    * Converts PCD data to LAS format.
    */
   template <typename CloudT>
-  void PCDtoLAS(const std::string &output, CloudT &cloud)
+  void PCDtoLAS(const std::string &output, liblas::Header &header, const CloudT &cloud)
   {
     typename CloudT::PointType testPoint = cloud.points[0];
 
@@ -49,7 +49,7 @@ namespace geopcl
     //
     // we should probably return the header in the first step, and pass it to
     // the final step to retain as much file level information as possible
-    liblas::Header header;
+    //liblas::Header header;
 
     liblas::PointFormatName format = liblas::ePointFormat0;
     // not quite ready to hanlde the other point formats

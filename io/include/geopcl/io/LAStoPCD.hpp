@@ -23,7 +23,7 @@ namespace geopcl
    * Converts LAS data to PCD format.
    */
   template <typename CloudT>
-  void LAStoPCD(const std::string &input, CloudT &cloud)
+  void LAStoPCD(const std::string &input, liblas::Header &header, CloudT &cloud)
   {
     std::ifstream ifs;
     if(!liblas::Open(ifs, input.c_str()))
@@ -37,7 +37,9 @@ namespace geopcl
 
     typedef typename pcl::traits::fieldList<typename CloudT::PointType>::type FieldList;
 
-    cloud.width = reader.GetHeader().GetPointRecordsCount();
+    header = reader.GetHeader();
+
+    cloud.width = header.GetPointRecordsCount();
     cloud.height = 1;  // unorganized point cloud
     cloud.is_dense = false;
     cloud.points.resize(cloud.width);
@@ -52,7 +54,6 @@ namespace geopcl
 
     if (has_x && has_y && has_z)
     {
-      reader.Reset();
       for (size_t i = 0; i < cloud.points.size(); ++i)
       {
         reader.ReadNextPoint();
