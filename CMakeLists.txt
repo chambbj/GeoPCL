@@ -66,6 +66,10 @@ set(PCDTOLAS pcdtolas)
 add_executable(${PCDTOLAS} apps/PCDtoLAS.cpp)
 target_link_libraries(${PCDTOLAS} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 
-install(TARGETS ${LASTOPCD} ${PCDTOLAS}
+set (TEST test)
+add_executable(${TEST} apps/test.cpp)
+target_link_libraries(${TEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
+
+install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${TEST}
   RUNTIME DESTINATION ${INSTALL_DIR})
 
