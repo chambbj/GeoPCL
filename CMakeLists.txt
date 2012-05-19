@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 
 set(INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
 
-project(LAStoPCD)
+project(GEOPCL)
 
 set(CMAKE_COLOR_MAKEFILE ON)
 
@@ -56,6 +56,15 @@ include_directories(${LIBLAS_INCLUDE_DIRS})
 link_directories(${LIBLAS_LIBRARY_DIRS})
 add_definitions(${LIBLAS_DEFINITIONS})
 
+#------------------------------------------------------------------------------
+# settings for PDAL
+#------------------------------------------------------------------------------
+
+find_package(PDAL)
+mark_as_advanced(CLEAR PDAL_INCLUDE_DIR)
+mark_as_advanced(CLEAR PDAL_LIBRARIES)
+include_directories(${PDAL_INCLUDE_DIR})
+
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
 
 set(LASTOPCD lastopcd)
@@ -66,10 +75,14 @@ set(PCDTOLAS pcdtolas)
 add_executable(${PCDTOLAS} apps/PCDtoLAS.cpp)
 target_link_libraries(${PCDTOLAS} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 
+set(PDALTOPCD pdaltopcd)
+add_executable(${PDALTOPCD} apps/PDALtoPCD.cpp)
+target_link_libraries(${PDALTOPCD} ${PCL_LIBRARIES} ${PDAL_LIBRARY})
+
 set (TEST test)
 add_executable(${TEST} apps/test.cpp)
 target_link_libraries(${TEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 
-install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${TEST}
+install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST}
   RUNTIME DESTINATION ${INSTALL_DIR})
 
