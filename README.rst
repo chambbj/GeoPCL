@@ -7,7 +7,7 @@ Features
 Conversions
 -----------
 
-_Conversions currently only consist of XYZ, and intensity fields if they exist._
+*Conversions currently only consist of XYZ, and intensity fields if they exist.*
 
 * LAS to/from PCD
 * PDAL-supported formats to PCD
