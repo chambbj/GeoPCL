@@ -4,7 +4,13 @@ GeoPCL is a collection of geospatial extensions to the Point Cloud Library
 Features
 ========
 
-* Convert between LAS and PCD formats (partial support)
+Conversions
+-----------
+
+_Conversions currently only consist of XYZ, and intensity fields if they exist._
+
+* LAS to/from PCD
+* PDAL-supported formats to PCD
 
 Future
 ======
