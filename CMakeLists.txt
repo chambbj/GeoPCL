@@ -12,6 +12,9 @@ mark_as_advanced(CMAKE_VERBOSE_MAKEFILE)
 # Path to additional CMake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
+option(WITH_IDL "Build IDL bindings?" OFF)
+mark_as_advanced(WITH_IDL)
+
 #------------------------------------------------------------------------------
 # settings for Boost dependencies
 #------------------------------------------------------------------------------
@@ -66,6 +69,12 @@ mark_as_advanced(CLEAR PDAL_LIBRARIES)
 include_directories(${PDAL_INCLUDE_DIR})
 
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
+
+if(WITH_IDL)
+  set(IDLTEST idltest)
+  add_executable(${IDLTEST} apps/idl_test.cpp)
+  target_link_libraries(${IDLTEST} ${PCL_LIBRARIES})
+endif(WITH_IDL)
 
 set(LASTOPCD lastopcd)
 add_executable(${LASTOPCD} apps/LAStoPCD.cpp)
