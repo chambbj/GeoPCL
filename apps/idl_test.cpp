@@ -18,9 +18,9 @@ idl_LAStoPCD_natural(IDL_STRING *input, IDL_STRING *output)
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
 
   liblas::Header header;
-  geopcl::LAStoPCD(input, header, *cloud);
+  geopcl::LAStoPCD(IDL_STRING_STR(input), header, *cloud);
 
-  pcl::io::savePCDFileASCII(output.c_str(), *cloud);
+  pcl::io::savePCDFileASCII(IDL_STRING_STR(output), *cloud);
 
   return 0;
 }
