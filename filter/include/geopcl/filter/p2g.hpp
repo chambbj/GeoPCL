@@ -6,11 +6,16 @@
 #include <limits>
 //#include <string>
 
+#include <boost/cstdint.hpp>
+
 //#include <liblas/liblas.hpp>
 
 // may also need CoreInterp, export, ...
+#include <points2grid/Global.hpp>
+#include <points2grid/CoreInterp.hpp>
 #include <points2grid/InCoreInterp.hpp>
 #include <points2grid/OutCoreInterp.hpp>
+//#include <points2grid/Interpolation.hpp>
 
 #include <pcl/common/common.h>
 #include <pcl/io/pcd_io.h>
@@ -27,7 +32,19 @@ namespace geopcl
   template <typename CloudT>
   void PointsToGrid(const CloudT &cloud, float resolution, CloudT &grid)
   {
-    std::cout << resolution << " meters" << std::endl;
+    static const boost::uint32_t MEM_LIMIT = 200000000;
+    boost::int32_t interpolation_mode;
+    CoreInterp *interp;
+    boost::int32_t rc;
+
+    double radius = std::sqrt(2.0) * static_cast<double>(resolution);
+    double radius_sqr = radius * radius;
+    boost::int32_t window_size = 3;
+
+    std::cout << "resolution = " << resolution << " meters" << std::endl;
+    std::cout << "radius = " << radius << " meters" << std::endl;
+    std::cout << "radius^2 = " << radius_sqr << " meters^2" << std::endl;
+    std::cout << "window size = " << window_size << " cells" << std::endl;
 
     /*
      * Compute extents of points.
@@ -72,7 +89,7 @@ namespace geopcl
     {
       std::cout << "Using in core interp code" << std::endl;
 
-      interp = new InCoreInter(xsize, ysize, xsize, ysize, radius_sqr,
+      interp = new InCoreInterp(xsize, ysize, xsize, ysize, radius_sqr,
         min_pt.x, max_pt.x, min_pt.y, max_pt.y, window_size);
     }
 
@@ -100,7 +117,7 @@ namespace geopcl
       }
     }
 
-    if ((rc = interp->finish(outputName, outputFormat, outputType)) < 0)
+    if ((rc = interp->finish("Sample", OUTPUT_FORMAT_ALL, OUTPUT_TYPE_MIN)) < 0)
     {
       std::cout << "interp->finish() error" << std::endl;
       return;

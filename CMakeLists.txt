@@ -73,14 +73,11 @@ include_directories(${PDAL_INCLUDE_DIR})
 #------------------------------------------------------------------------------
 
 find_package(Points2Grid)
-#if(P2G_FOUND)
-#    set(CMAKE_REQUIRED_LIBRARIES ${P2G_LIBRARY})
-mark_as_advanced(CLEAR P2G_INCLUDE_DIR)
-mark_as_advanced(CLEAR P2G_LIBRARIES)
-    include_directories(${P2G_INCLUDE_DIR})
-#endif()
-
-
+#mark_as_advanced(CLEAR P2G_INCLUDE_DIR)
+#mark_as_advanced(CLEAR P2G_LIBRARIES)
+include_directories(${P2G_INCLUDE_DIR})
+link_directories(${P2G_LIBRARY_DIRS})
+add_definitions(${P2G_DEFINITIONS})
 
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
 include_directories(${CMAKE_SOURCE_DIR}/filter/include)
@@ -109,7 +106,7 @@ target_link_libraries(${TEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 
 set (TESTP2G test_p2g)
 add_executable(${TESTP2G} apps/test_p2g.cpp)
-target_link_libraries(${TESTP2G} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
+target_link_libraries(${TESTP2G} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY} ${P2G_LIBRARY})
 
 install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST} ${TESTP2G}
   RUNTIME DESTINATION ${INSTALL_DIR})
