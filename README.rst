@@ -17,11 +17,17 @@ IDL Bindings
 
 * LAS to PCD
 
+Raster Support
+--------------
+
+* Gridding
+  1) Native implementation
+  2) Linking against points2grid library
+
 Future
 ======
 
 * Bare earth extraction
-* Gridding (e.g., DEM generation)
 
 License
 =======
