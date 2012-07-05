@@ -45,7 +45,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 # settings for PCL dependencies
 #------------------------------------------------------------------------------
 
-find_package(PCL 1.5 REQUIRED)
+find_package(PCL 1.6 REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
@@ -68,7 +68,22 @@ mark_as_advanced(CLEAR PDAL_INCLUDE_DIR)
 mark_as_advanced(CLEAR PDAL_LIBRARIES)
 include_directories(${PDAL_INCLUDE_DIR})
 
+#------------------------------------------------------------------------------
+# settings for points2grid
+#------------------------------------------------------------------------------
+
+find_package(Points2Grid)
+#if(P2G_FOUND)
+#    set(CMAKE_REQUIRED_LIBRARIES ${P2G_LIBRARY})
+mark_as_advanced(CLEAR P2G_INCLUDE_DIR)
+mark_as_advanced(CLEAR P2G_LIBRARIES)
+    include_directories(${P2G_INCLUDE_DIR})
+#endif()
+
+
+
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
+include_directories(${CMAKE_SOURCE_DIR}/filter/include)
 
 if(WITH_IDL)
   include_directories(${IDL_INCLUDE_DIR})
@@ -92,6 +107,10 @@ set (TEST test)
 add_executable(${TEST} apps/test.cpp)
 target_link_libraries(${TEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 
-install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST}
+set (TESTP2G test_p2g)
+add_executable(${TESTP2G} apps/test_p2g.cpp)
+target_link_libraries(${TESTP2G} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
+
+install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST} ${TESTP2G}
   RUNTIME DESTINATION ${INSTALL_DIR})
 
