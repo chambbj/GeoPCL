@@ -11,7 +11,7 @@
 #include <geopcl/io/LAStoPCD.hpp>
 
 int
-sum_array_natural(IDL_STRING *input, IDL_STRING *output)
+idl_LAStoPCD_natural(IDL_STRING *input, IDL_STRING *output)
 { 
   std::cout << "Reading " << input << " and writing " << output << std::endl;
 
@@ -26,7 +26,7 @@ sum_array_natural(IDL_STRING *input, IDL_STRING *output)
 }
 
 int
-sum_array(int argc, void *argv[])
+idl_LAStoPCD(int argc, void *argv[])
 {
   if (argc != 3)
   {
@@ -34,6 +34,6 @@ sum_array(int argc, void *argv[])
     return 1;
   }
 
-  return sum_array_natural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
+  return idl_LAStoPCD_natural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
 }
 

@@ -12,6 +12,11 @@ Conversions
 * LAS to/from PCD
 * PDAL-supported formats to PCD
 
+IDL Bindings
+------------
+
+* LAS to PCD
+
 Future
 ======
 
