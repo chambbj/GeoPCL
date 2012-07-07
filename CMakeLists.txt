@@ -77,6 +77,10 @@ if(WITH_IDL)
   set(IDLTEST idltest)
   add_library(${IDLTEST} SHARED apps/idl_test.cpp)
   target_link_libraries(${IDLTEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
+
+  set(IDLHULL idlhull)
+  add_library(${IDLHULL} SHARED apps/idl_hull.cpp)
+  target_link_libraries(${IDLHULL} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 endif(WITH_IDL)
 
 set(LASTOPCD lastopcd)
