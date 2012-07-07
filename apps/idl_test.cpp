@@ -13,7 +13,7 @@
 int
 idl_LAStoPCD_natural(IDL_STRING *input, IDL_STRING *output)
 { 
-  std::cout << "Reading " << input << " and writing " << output << std::endl;
+  std::cout << "Reading " << IDL_STRING_STR(input) << " and writing " << IDL_STRING_STR(output) << std::endl;
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
 
@@ -28,7 +28,7 @@ idl_LAStoPCD_natural(IDL_STRING *input, IDL_STRING *output)
 int
 idl_LAStoPCD(int argc, void *argv[])
 {
-  if (argc != 3)
+  if (argc != 2)
   {
     std::cerr << "Required arguments: input.las output.pcd" << std::endl;
     return 1;

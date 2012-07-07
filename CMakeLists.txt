@@ -69,7 +69,7 @@ mark_as_advanced(CLEAR PDAL_LIBRARIES)
 include_directories(${PDAL_INCLUDE_DIR})
 
 # cheap hackery, use Downloads folder for idl_export include
-include_directories(/Users/bchambers/Downloads)
+include_directories(/home/bchambers)
 
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
 
