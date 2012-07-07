@@ -68,19 +68,12 @@ mark_as_advanced(CLEAR PDAL_INCLUDE_DIR)
 mark_as_advanced(CLEAR PDAL_LIBRARIES)
 include_directories(${PDAL_INCLUDE_DIR})
 
-# cheap hackery, use Downloads folder for idl_export include
-include_directories(/home/bchambers)
-
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
 
 if(WITH_IDL)
-  set(IDLTEST idltest)
-  add_library(${IDLTEST} SHARED apps/idl_test.cpp)
-  target_link_libraries(${IDLTEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
-
-  set(IDLHULL idlhull)
-  add_library(${IDLHULL} SHARED apps/idl_hull.cpp)
-  target_link_libraries(${IDLHULL} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
+  include_directories(${IDL_INCLUDE_DIR})
+  set(IDL_LIB_NAME geopcl_idl_bindings)
+  add_subdirectory(bindings/idl)
 endif(WITH_IDL)
 
 set(LASTOPCD lastopcd)
