@@ -16,11 +16,13 @@ IDL Bindings
 ------------
 
 * LAS to PCD
+* Convex hull
 
 Raster Support
 --------------
 
 * Gridding
+
   1) Native implementation
   2) Linking against points2grid library
 
