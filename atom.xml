@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[GeoPCL]]></title>
   <link href="http://chambbj.github.com/GeoPCL/atom.xml" rel="self"/>
   <link href="http://chambbj.github.com/GeoPCL/"/>
-  <updated>2012-07-08T00:05:00-04:00</updated>
+  <updated>2012-07-08T00:09:39-04:00</updated>
   <id>http://chambbj.github.com/GeoPCL/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Bradley J Chambers]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
