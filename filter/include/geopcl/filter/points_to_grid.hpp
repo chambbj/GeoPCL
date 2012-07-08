@@ -47,7 +47,7 @@ namespace geopcl
     grid.width = xsize;
     grid.height = ysize;
     grid.is_dense = false;
-    grid.points.resize(cloud.width*grid.height);
+    grid.points.resize(cloud.width * grid.height);
     std::cout << grid.points.size() << " points" << std::endl;
 
     for (size_t x = 0; x < xsize; ++x)
@@ -60,6 +60,7 @@ namespace geopcl
         grid.points[idx].z = std::numeric_limits<float>::max();
       }
     }
+
     std::cout << grid.points[0] << std::endl;
 
     /*
@@ -76,6 +77,7 @@ namespace geopcl
 
       if (p.z < grid.points[idx].z) grid.points[idx].z = p.z;
     }
+
     std::cout << grid.points[0] << std::endl;
   }
 }  // geopcl

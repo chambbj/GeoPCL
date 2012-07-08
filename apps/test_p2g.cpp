@@ -10,7 +10,7 @@
 //#include <geopcl/filter/points_to_grid.hpp>
 #include <geopcl/filter/p2g.hpp>
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
   if (argc < 2)
   {

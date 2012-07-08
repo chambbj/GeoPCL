@@ -15,7 +15,7 @@
 
 int
 idl_hull_natural(IDL_STRING *input, IDL_STRING *output)
-{ 
+{
   std::cout << "Reading " << IDL_STRING_STR(input) << " and writing " << IDL_STRING_STR(output) << std::endl;
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
@@ -25,14 +25,14 @@ idl_hull_natural(IDL_STRING *input, IDL_STRING *output)
 
   bool concave = false;
 
-  if(concave)
+  if (concave)
   {
     // Create the concave hull
-    pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_hull (new pcl::PointCloud<pcl::PointXYZI>);
+    pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_hull(new pcl::PointCloud<pcl::PointXYZI>);
     pcl::ConcaveHull<pcl::PointXYZI> chull;
-    chull.setInputCloud (cloud);
-    chull.setAlpha (0.1);
-    chull.reconstruct (*cloud_hull);
+    chull.setInputCloud(cloud);
+    chull.setAlpha(0.1);
+    chull.reconstruct(*cloud_hull);
 
     std::cerr << "Concave hull has: " << cloud_hull->points.size()
               << " data points." << std::endl;
@@ -42,10 +42,10 @@ idl_hull_natural(IDL_STRING *input, IDL_STRING *output)
   else
   {
     // Create the convex hull
-    pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_hull (new pcl::PointCloud<pcl::PointXYZI>);
+    pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_hull(new pcl::PointCloud<pcl::PointXYZI>);
     pcl::ConvexHull<pcl::PointXYZI> chull;
-    chull.setInputCloud (cloud);
-    chull.reconstruct (*cloud_hull);
+    chull.setInputCloud(cloud);
+    chull.reconstruct(*cloud_hull);
 
     std::cerr << "Convex hull has: " << cloud_hull->points.size()
               << " data points." << std::endl;

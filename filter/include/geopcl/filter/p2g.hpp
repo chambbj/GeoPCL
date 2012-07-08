@@ -63,7 +63,7 @@ namespace geopcl
     std::cout << ysize << " y bins" << std::endl;
 
     // auto?
-    if(xsize * ysize > MEM_LIMIT)
+    if (xsize * ysize > MEM_LIMIT)
     {
       interpolation_mode = INTERP_OUTCORE;
     }
@@ -72,14 +72,14 @@ namespace geopcl
       interpolation_mode = INTERP_INCORE;
     }
 
-    if(interpolation_mode == INTERP_OUTCORE)
+    if (interpolation_mode == INTERP_OUTCORE)
     {
       std::cout << "Using out of core interp code" << std::endl;
 
       interp = new OutCoreInterp(xsize, ysize, xsize, ysize, radius_sqr,
-        min_pt.x, max_pt.x, min_pt.x, max_pt.y, window_size);
+                                 min_pt.x, max_pt.x, min_pt.x, max_pt.y, window_size);
 
-      if(interp==NULL)
+      if (interp == NULL)
       {
         std::cout << "OutCoreInterp construction error" << std::endl;
         return;
@@ -90,10 +90,10 @@ namespace geopcl
       std::cout << "Using in core interp code" << std::endl;
 
       interp = new InCoreInterp(xsize, ysize, xsize, ysize, radius_sqr,
-        min_pt.x, max_pt.x, min_pt.y, max_pt.y, window_size);
+                                min_pt.x, max_pt.x, min_pt.y, max_pt.y, window_size);
     }
 
-    if(interp->init() < 0)
+    if (interp->init() < 0)
     {
       std::cout << "interp->init() error" << std::endl;
       return;
@@ -110,7 +110,7 @@ namespace geopcl
       p.x -= min_pt.x;
       p.y -= min_pt.y;
 
-      if((rc = interp->update(p.x, p.y, p.z)) < 0)
+      if ((rc = interp->update(p.x, p.y, p.z)) < 0)
       {
         std::cout << "interp->update() error while processing" << std::endl;
         return;

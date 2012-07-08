@@ -12,7 +12,7 @@
 
 int
 idl_LAStoPCD_natural(IDL_STRING *input, IDL_STRING *output)
-{ 
+{
   std::cout << "Reading " << IDL_STRING_STR(input) << " and writing " << IDL_STRING_STR(output) << std::endl;
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);

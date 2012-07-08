@@ -34,7 +34,8 @@ namespace geopcl
     typedef typename pcl::traits::fieldList<typename CloudT::PointType>::type FieldList;
 
     std::ofstream ofs;
-    if(!liblas::Create(ofs, output.c_str()))
+
+    if (!liblas::Create(ofs, output.c_str()))
     {
       std::cerr << "Cannot open " << output << " for write. Exiting..." << std::endl;
       return;
@@ -62,9 +63,9 @@ namespace geopcl
     header.SetOffset(0.0, 0.0, 0.0);
     header.SetPointRecordsCount(cloud.points.size());
 
-    liblas::Writer* writer = new liblas::Writer(ofs, header);
+    liblas::Writer *writer = new liblas::Writer(ofs, header);
 
-    liblas::CoordinateSummary* summary(new liblas::CoordinateSummary);
+    liblas::CoordinateSummary *summary(new liblas::CoordinateSummary);
 
     bool has_i = false;
     float i_val = 0.0f;
@@ -83,7 +84,7 @@ namespace geopcl
       {
         q.SetIntensity(static_cast<boost::uint16_t>(p.intensity));
       }
-      
+
       try
       {
         summary->AddPoint(q);
@@ -111,7 +112,7 @@ namespace geopcl
                     tree.get<double>("summary.points.maximum.y"),
                     tree.get<double>("summary.points.maximum.z"));
     }
-    catch (liblas::property_tree::ptree_bad_path const&)
+    catch (liblas::property_tree::ptree_bad_path const &)
     {
       std::cerr << "Unable to write bounds info." << std::endl;
       return;
@@ -124,15 +125,15 @@ namespace geopcl
         header.SetPointRecordsByReturnCount(i, 0);
       }
 
-      BOOST_FOREACH(ptree::value_type &v,
-        tree.get_child("summary.points.points_by_return"))
+      BOOST_FOREACH(ptree::value_type & v,
+                    tree.get_child("summary.points.points_by_return"))
       {
         boost::uint32_t i = v.second.get<boost::uint32_t>("id");
         boost::uint32_t count = v.second.get<boost::uint32_t>("count");
-        header.SetPointRecordsByReturnCount(i-1, count);
+        header.SetPointRecordsByReturnCount(i - 1, count);
       }
     }
-    catch (liblas::property_tree::ptree_bad_path const&)
+    catch (liblas::property_tree::ptree_bad_path const &)
     {
       std::cerr << "Unable to write header point count info." << std::endl;
       return;

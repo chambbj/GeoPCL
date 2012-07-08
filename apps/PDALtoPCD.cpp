@@ -5,7 +5,7 @@
 
 #include <geopcl/io/PDALtoPCD.hpp>
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
   if (argc < 3)
   {

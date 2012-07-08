@@ -130,7 +130,7 @@ namespace geopcl
     const pdal::Dimension &dX = buffer_schema.getDimension("X");
     const pdal::Dimension &dY = buffer_schema.getDimension("Y");
     const pdal::Dimension &dZ = buffer_schema.getDimension("Z");
-    
+
     if (has_x && has_y && has_z)
     {
       for (size_t i = 0; i < cloud.points.size(); ++i)
@@ -143,7 +143,7 @@ namespace geopcl
       }
     }
 
-    boost::optional<pdal::Dimension const&> dI = buffer_schema.getDimensionOptional("Intensity");
+    boost::optional<pdal::Dimension const &> dI = buffer_schema.getDimensionOptional("Intensity");
 
     bool has_i = false;
     float i_val = 0.0f;

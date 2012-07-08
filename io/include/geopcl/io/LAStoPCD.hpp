@@ -26,7 +26,8 @@ namespace geopcl
   void LAStoPCD(const std::string &input, liblas::Header &header, CloudT &cloud)
   {
     std::ifstream ifs;
-    if(!liblas::Open(ifs, input.c_str()))
+
+    if (!liblas::Open(ifs, input.c_str()))
     {
       std::cerr << "Cannot open " << input << " for read. Exiting..." << std::endl;
       return;
@@ -57,7 +58,7 @@ namespace geopcl
       for (size_t i = 0; i < cloud.points.size(); ++i)
       {
         reader.ReadNextPoint();
-        liblas::Point const& q = reader.GetPoint();
+        liblas::Point const &q = reader.GetPoint();
 
         typename CloudT::PointType p = cloud.points[i];
         pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "x", static_cast<float>(q.GetX())));
@@ -74,10 +75,11 @@ namespace geopcl
     if (has_i)
     {
       reader.Reset();
+
       for (size_t i = 0; i < cloud.points.size(); ++i)
       {
         reader.ReadNextPoint();
-        liblas::Point const& q = reader.GetPoint();
+        liblas::Point const &q = reader.GetPoint();
 
         typename CloudT::PointType p = cloud.points[i];
         pcl::for_each_type<FieldList> (pcl::SetIfFieldExists<typename CloudT::PointType, float> (p, "intensity", static_cast<float>(q.GetIntensity())));
