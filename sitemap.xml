@@ -1,10 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://chambbj.github.com/GeoPCL/about/</loc>
-        <lastmod>2012-07-08T00:09:18-04:00</lastmod>
-    </url>
-    <url>
         <loc>http://chambbj.github.com/GeoPCL/blog/archives/</loc>
         <lastmod>2012-07-08T00:03:52-04:00</lastmod>
     </url>
