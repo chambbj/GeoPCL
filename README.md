@@ -2,10 +2,8 @@ GeoPCL is a collection of geospatial extensions to the Point Cloud Library
 (PCL).
 
 ## Features
-========
 
 ### Conversions
------------
 
 *Conversions currently only consist of XYZ, and intensity fields if they exist.*
 
@@ -13,13 +11,11 @@ GeoPCL is a collection of geospatial extensions to the Point Cloud Library
 * PDAL-supported formats to PCD
 
 ### IDL Bindings
-------------
 
 * LAS to PCD
 * Convex hull
 
 ### Raster Support
---------------
 
 * Gridding
 
@@ -27,17 +23,15 @@ GeoPCL is a collection of geospatial extensions to the Point Cloud Library
   1. Linking against points2grid library
 
 ## Future
-======
 
 * Bare earth extraction
 
 ## License
-=======
 
 GeoPCL is released under the terms of the **BSD license**.
 
 > Copyright (c) 2012, Bradley J Chambers
-
+>
 > All rights reserved.
 >
 > Redistribution and use in source and binary forms, with or without
