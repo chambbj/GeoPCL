@@ -1,7 +1,7 @@
 GeoPCL is a collection of geospatial extensions to the Point Cloud Library
 (PCL).
 
-[About](/doc/)
+[About](/doc/about.md)
 
 ## Features
 ========
