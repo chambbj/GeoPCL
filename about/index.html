@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="About Jul 8th, 2012 GeoPCL is a collection of geospatial extensions to the Point Cloud Library
-(PCL). Features Conversions Conversions currently &hellip;">
+(PCL). GeoPCL depends on PCL, as well as libLAS, PDAL &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -97,58 +97,36 @@
   </header>
   
   <p>GeoPCL is a collection of geospatial extensions to the Point Cloud Library
-(PCL).</p>
+(PCL). GeoPCL depends on PCL, as well as libLAS, PDAL, and points2grid. To
+build the IDL bindings, one must have IDL installed.</p>
 
-<h2>Features</h2>
+<p>GeoPCL can open point cloud data in the LAS format (XYZ and intensity fields
+only) and convert it to the PCD format used internally by PCL. PDAL supported
+formats can be converted as well. Once the data has been processed by PCL, it
+can then be converted back to LAS for export.</p>
 
-<h3>Conversions</h3>
+<p>GeoPCL&#8217;s IDL bindings are intended to be used to expose PCL modules to IDL
+users. There are currently two IDL bindings, an LAS to PCD conversion example
+and a convex hull calculation.</p>
 
-<p><em>Conversions currently only consist of XYZ, and intensity fields if they exist.</em></p>
+<p>GeoPCL has a native implementation of a gridding algorithm and also links to
+the point2grid library for more advanced gridding approaches (e.g., min, max,
+average, IDW, &#8230;).</p>
 
-<ul>
-<li>LAS to/from PCD</li>
-<li>PDAL-supported formats to PCD</li>
-</ul>
-
-
-<h3>IDL Bindings</h3>
-
-<ul>
-<li>LAS to PCD</li>
-<li>Convex hull</li>
-</ul>
-
-
-<h3>Raster Support</h3>
-
-<ul>
-<li><p>Gridding</p>
-
-<ol>
-<li>Native implementation</li>
-<li>Linking against points2grid library</li>
-</ol>
-</li>
-</ul>
-
-
-<h2>Future</h2>
-
-<ul>
-<li>Bare earth extraction</li>
-</ul>
-
+<p>Future releases of GeoPCL will extend the ability to perform common geospatial
+processing tasks for point cloud data, such as feature extraction and ground
+return filtering.</p>
 
 <h2>License</h2>
 
 <p>GeoPCL is released under the terms of the <strong>BSD license</strong>.</p>
 
-<blockquote><p>Copyright (c) 2012, Bradley J Chambers</p>
+<p>  Copyright (c) 2012, Bradley J Chambers</p>
 
-<p>All rights reserved.</p>
+<p>  All rights reserved.</p>
 
-<p>Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:</p>
+<p>  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:</p>
 
 <ul>
 <li>Redistributions of source code must retain the above copyright notice,
@@ -159,17 +137,17 @@ and/or other materials provided with the distribution.</li>
 </ul>
 
 
-<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &#8220;AS IS&#8221;
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.</p></blockquote>
+<p>  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &#8220;AS IS&#8221;
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.</p>
 
   
     <footer>
