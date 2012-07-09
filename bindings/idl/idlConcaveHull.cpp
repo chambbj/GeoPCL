@@ -5,7 +5,7 @@
 
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
-#include <pcl/surface/convex_hull.h>
+#include <pcl/surface/concave_hull.h>
 
 #include <liblas/liblas.hpp>
 
@@ -13,7 +13,7 @@
 #include <geopcl/io/PCDtoLAS.hpp>
 
 int
-idlConvexHullnatural(IDL_STRING *input, IDL_STRING *output)
+idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output)
 {
   std::cout << "Reading " << IDL_STRING_STR(input) << " and writing " << IDL_STRING_STR(output) << std::endl;
 
@@ -22,13 +22,14 @@ idlConvexHullnatural(IDL_STRING *input, IDL_STRING *output)
   liblas::Header header;
   geopcl::LAStoPCD(IDL_STRING_STR(input), header, *cloud);
 
-  // Create the convex hull
+  // Create the concave hull
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_hull(new pcl::PointCloud<pcl::PointXYZI>);
-  pcl::ConvexHull<pcl::PointXYZI> chull;
+  pcl::ConcaveHull<pcl::PointXYZI> chull;
   chull.setInputCloud(cloud);
+  chull.setAlpha(0.1);
   chull.reconstruct(*cloud_hull);
 
-  std::cerr << "Convex hull has: " << cloud_hull->points.size()
+  std::cerr << "Concave hull has: " << cloud_hull->points.size()
             << " data points." << std::endl;
 
   geopcl::PCDtoLAS(IDL_STRING_STR(output), header, *cloud_hull);
@@ -37,7 +38,7 @@ idlConvexHullnatural(IDL_STRING *input, IDL_STRING *output)
 }
 
 int
-idlConvexHull(int argc, void *argv[])
+idlConcaveHull(int argc, void *argv[])
 {
   if (argc != 2)
   {
@@ -45,6 +46,6 @@ idlConvexHull(int argc, void *argv[])
     return 1;
   }
 
-  return idlConvexHullnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
+  return idlConcaveHullnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
 }
 

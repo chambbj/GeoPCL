@@ -1,6 +1,7 @@
 set(IDL_SOURCES
-  idl_test.cpp
-  idl_hull.cpp
+  idlConcaveHull.cpp
+  idlConvexHull.cpp
+  idlLAStoPCD.cpp
  )
 
 add_library(${IDL_LIB_NAME} SHARED ${IDL_SOURCES})
