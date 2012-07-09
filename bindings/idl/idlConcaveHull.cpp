@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "ogrsf_frmts.h"
+
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <pcl/ModelCoefficients.h>
@@ -12,11 +14,44 @@
 #include <liblas/liblas.hpp>
 
 #include <geopcl/io/LAStoPCD.hpp>
-#include <geopcl/io/PCDtoLAS.hpp>
+// #include <geopcl/io/PCDtoLAS.hpp>
 
 int
 idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha)
 {
+  // Setup OGR
+  const char *driver_name = "KML";
+  OGRSFDriver *driver;
+  
+  OGRRegisterAll();
+
+  driver = OGRSFDriverRegistrar::GetRegistrar()->GetDriverByName(driver_name);
+  if (driver == NULL)
+  {
+    std::cout << driver_name << " driver not available." << std::endl;
+    return 1;
+  }
+
+  OGRDataSource *source;
+
+  source = driver->CreateDataSource("boundary.kml", NULL);
+  if (source == NULL)
+  {
+    std::cout << "Creation of output file failed." << std::endl;
+    return 1;
+  }
+
+  OGRLayer *layer;
+
+  layer = source->CreateLayer( "polygon_out", NULL, wkbPolygon, NULL);
+  if (layer == NULL)
+  {
+    std::cout << "Layer creation failed." << std::endl;
+    return 1;
+  }
+
+  // Setup point clouds
+
   std::cout << "Computing concave hull of " << IDL_STRING_STR(input) << " with an alpha of " << *alpha << " and writing result as " << IDL_STRING_STR(output) << std::endl;
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
@@ -49,7 +84,51 @@ idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha
   std::cerr << "Concave hull has: " << cloud_hull->points.size()
             << " data points." << std::endl;
 
-  geopcl::PCDtoLAS(IDL_STRING_STR(output), header, *cloud_hull);
+//  geopcl::PCDtoLAS(IDL_STRING_STR(output), header, *cloud_hull);
+
+  OGRSpatialReference input_srs;
+  input_srs.SetFromUserInput(header.GetSRS().GetWKT().c_str());
+
+  OGRSpatialReference *output_srs;
+  output_srs = input_srs.CloneGeogCS();
+
+  OGRCoordinateTransformation *UTMtoLL = OGRCreateCoordinateTransformation(&input_srs, output_srs);
+  if (UTMtoLL == NULL)
+  {
+    std::cout << "Error creating UTM to Lat/Lon transformation." << std::endl;
+    return 1;
+  }
+
+  for (size_t i = 0; i < cloud_hull->points.size(); ++i)
+  {
+    double lat, lon;
+    lat = cloud_hull->points[i].y;
+    lon = cloud_hull->points[i].x;
+
+    if (UTMtoLL->Transform(1, &lon, &lat))
+    {
+      OGRFeature *feature;
+
+      feature = OGRFeature::CreateFeature(layer->GetLayerDefn());
+
+      OGRPoint pt;
+
+      pt.setX(cloud_hull->points[i].x);
+      pt.setY(cloud_hull->points[i].y);
+
+      feature->SetGeometry(&pt);
+
+      if (layer->CreateFeature(feature) != OGRERR_NONE)
+      {
+        std::cout << "Failed to create feature in shapefile." << std::endl;
+        return 1;
+      }
+
+      OGRFeature::DestroyFeature(feature);
+    }
+  }
+
+  OGRDataSource::DestroyDataSource(source);
 
   return 0;
 }

@@ -45,6 +45,23 @@ mark_as_advanced(CLEAR Boost_LIBRARY_DIRS)
 link_directories(${Boost_LIBRARY_DIRS})
 
 #------------------------------------------------------------------------------
+# settings for GDAL dependencies
+#------------------------------------------------------------------------------
+
+# GDAL/OGR support - optional, default=OFF
+set(WITH_GDAL FALSE CACHE BOOL "Choose if GDAL support should be built")
+
+if(WITH_GDAL)
+  find_package(GDAL 1.9.0)
+  include_directories(${GDAL_INCLUDE_DIR})
+  mark_as_advanced(CLEAR GDAL_INCLUDE_DIR) 
+  mark_as_advanced(CLEAR GDAL_LIBRARY)
+  message(STATUS "...building with GDAL")
+else()
+  set(GDAL_LIBRARY "") 
+endif()
+
+#------------------------------------------------------------------------------
 # settings for PCL dependencies
 #------------------------------------------------------------------------------
 
