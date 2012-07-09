@@ -17,7 +17,7 @@
 int
 idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha)
 {
-  std::cout << "Computing concave hull of " << IDL_STRING_STR(input) << " with an alpha of " << *alpha << " and writing result as " << IDL_STRING_STR(output) << std::endl;
+  std::cout << "Computing concave hull of " << IDL_STRING_STR(input) << " with an alpha of " << (*alpha) << " and writing result as " << IDL_STRING_STR(output) << std::endl;
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_projected(new pcl::PointCloud<pcl::PointXYZI>);
