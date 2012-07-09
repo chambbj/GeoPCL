@@ -15,6 +15,9 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 option(WITH_IDL "Build IDL bindings?" OFF)
 mark_as_advanced(WITH_IDL)
 
+option(WITH_P2G "Build with points2grid?" OFF)
+mark_as_advanced(WITH_P2G)
+
 #------------------------------------------------------------------------------
 # settings for Boost dependencies
 #------------------------------------------------------------------------------
@@ -72,12 +75,14 @@ include_directories(${PDAL_INCLUDE_DIR})
 # settings for points2grid
 #------------------------------------------------------------------------------
 
-find_package(Points2Grid)
-#mark_as_advanced(CLEAR P2G_INCLUDE_DIR)
-#mark_as_advanced(CLEAR P2G_LIBRARIES)
-include_directories(${P2G_INCLUDE_DIR})
-link_directories(${P2G_LIBRARY_DIRS})
-add_definitions(${P2G_DEFINITIONS})
+if(WITH_P2G)
+  find_package(Points2Grid)
+  #mark_as_advanced(CLEAR P2G_INCLUDE_DIR)
+  #mark_as_advanced(CLEAR P2G_LIBRARIES)
+  include_directories(${P2G_INCLUDE_DIR})
+  link_directories(${P2G_LIBRARY_DIRS})
+  add_definitions(${P2G_DEFINITIONS})
+endif(WITH_P2G)
 
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
 include_directories(${CMAKE_SOURCE_DIR}/filter/include)
@@ -104,9 +109,11 @@ set (TEST test)
 add_executable(${TEST} apps/test.cpp)
 target_link_libraries(${TEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 
-set (TESTP2G test_p2g)
-add_executable(${TESTP2G} apps/test_p2g.cpp)
-target_link_libraries(${TESTP2G} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY} ${P2G_LIBRARY})
+if(WITH_P2G)
+  set (TESTP2G test_p2g)
+  add_executable(${TESTP2G} apps/test_p2g.cpp)
+  target_link_libraries(${TESTP2G} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY} ${P2G_LIBRARY})
+endif(WITH_P2G)
 
 install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST} ${TESTP2G}
   RUNTIME DESTINATION ${INSTALL_DIR})
