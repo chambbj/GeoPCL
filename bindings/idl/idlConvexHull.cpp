@@ -21,12 +21,12 @@ idlConvexHullnatural(IDL_STRING *input, IDL_STRING *output)
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_projected(new pcl::PointCloud<pcl::PointXYZI>);
-  
+
   liblas::Header header;
   geopcl::LAStoPCD(IDL_STRING_STR(input), header, *cloud);
 
   // Create a set of planar coefficients with X=0, Y=0, Z=1, i.e., the XY plane
-  pcl::ModelCoefficients::Ptr coefficients (new pcl::ModelCoefficients());
+  pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients());
   coefficients->values.resize(4);
   coefficients->values[0] = coefficients->values[1] = 0;
   coefficients->values[2] = 1.0;
