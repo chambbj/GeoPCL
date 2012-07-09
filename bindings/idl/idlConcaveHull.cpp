@@ -83,7 +83,7 @@ idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha
   pcl::ConcaveHull<pcl::PointXYZI> chull;
   chull.setInputCloud(cloud_projected);
   chull.setAlpha(*alpha);
-  chull.reconstruct(*cloud_hull);
+//  chull.reconstruct(*cloud_hull);
 
   std::cerr << "Concave hull has: " << cloud_hull->points.size()
             << " data points." << std::endl;
@@ -92,6 +92,8 @@ idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha
 
   OGRSpatialReference input_srs;
   input_srs.SetFromUserInput(header.GetSRS().GetWKT().c_str());
+
+  std::cout << header.GetSRS().GetWKT().c_str() << std::endl;
 
   OGRSpatialReference *output_srs;
   output_srs = input_srs.CloneGeogCS();
