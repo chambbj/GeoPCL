@@ -11,7 +11,7 @@
 #include <geopcl/io/LAStoPCD.hpp>
 
 int
-idl_LAStoPCD_natural(IDL_STRING *input, IDL_STRING *output)
+idlLAStoPCDnatural(IDL_STRING *input, IDL_STRING *output)
 {
   std::cout << "Reading " << IDL_STRING_STR(input) << " and writing " << IDL_STRING_STR(output) << std::endl;
 
@@ -26,7 +26,7 @@ idl_LAStoPCD_natural(IDL_STRING *input, IDL_STRING *output)
 }
 
 int
-idl_LAStoPCD(int argc, void *argv[])
+idlLAStoPCD(int argc, void *argv[])
 {
   if (argc != 2)
   {
@@ -34,6 +34,6 @@ idl_LAStoPCD(int argc, void *argv[])
     return 1;
   }
 
-  return idl_LAStoPCD_natural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
+  return idlLAStoPCDnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
 }
 

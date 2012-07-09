@@ -14,7 +14,7 @@
 #include <geopcl/io/PCDtoLAS.hpp>
 
 int
-idl_hull_natural(IDL_STRING *input, IDL_STRING *output)
+idlConvexHullnatural(IDL_STRING *input, IDL_STRING *output)
 {
   std::cout << "Reading " << IDL_STRING_STR(input) << " and writing " << IDL_STRING_STR(output) << std::endl;
 
@@ -57,7 +57,7 @@ idl_hull_natural(IDL_STRING *input, IDL_STRING *output)
 }
 
 int
-idl_hull(int argc, void *argv[])
+idlConvexHull(int argc, void *argv[])
 {
   if (argc != 2)
   {
@@ -65,6 +65,6 @@ idl_hull(int argc, void *argv[])
     return 1;
   }
 
-  return idl_hull_natural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
+  return idlConvexHullnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
 }
 
