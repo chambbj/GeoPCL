@@ -13,9 +13,9 @@
 #include <geopcl/io/PCDtoLAS.hpp>
 
 int
-idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output)
+idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha)
 {
-  std::cout << "Reading " << IDL_STRING_STR(input) << " and writing " << IDL_STRING_STR(output) << std::endl;
+  std::cout << "Computing concave hull of " << IDL_STRING_STR(input) << " with an alpha of " << alpha << " and writing result as " << IDL_STRING_STR(output) << std::endl;
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
 
@@ -26,7 +26,7 @@ idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output)
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_hull(new pcl::PointCloud<pcl::PointXYZI>);
   pcl::ConcaveHull<pcl::PointXYZI> chull;
   chull.setInputCloud(cloud);
-  chull.setAlpha(0.1);
+  chull.setAlpha(*alpha);
   chull.reconstruct(*cloud_hull);
 
   std::cerr << "Concave hull has: " << cloud_hull->points.size()
@@ -40,12 +40,12 @@ idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output)
 int
 idlConcaveHull(int argc, void *argv[])
 {
-  if (argc != 2)
+  if (argc != 3)
   {
-    std::cerr << "Required arguments: input.las output.las" << std::endl;
+    std::cerr << "Required arguments: input.las output.las <alpha>" << std::endl;
     return 1;
   }
 
-  return idlConcaveHullnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
+  return idlConcaveHullnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1], static_cast<double *>(argv[2]));
 }
 
