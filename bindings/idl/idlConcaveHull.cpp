@@ -16,6 +16,10 @@
 #include <geopcl/io/LAStoPCD.hpp>
 // #include <geopcl/io/PCDtoLAS.hpp>
 
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
 int
 idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha)
 {
@@ -144,4 +148,8 @@ idlConcaveHull(int argc, void *argv[])
 
   return idlConcaveHullnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1], static_cast<double *>(argv[2]));
 }
+
+#ifdef __cplusplus
+  }
+#endif
 
