@@ -10,6 +10,10 @@
 
 #include <geopcl/io/LAStoPCD.hpp>
 
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
 int
 idlLAStoPCDnatural(IDL_STRING *input, IDL_STRING *output)
 {
@@ -36,4 +40,8 @@ idlLAStoPCD(int argc, void *argv[])
 
   return idlLAStoPCDnatural((IDL_STRING *) argv[0], (IDL_STRING *) argv[1]);
 }
+
+#ifdef __cplusplus
+  }
+#endif
 
