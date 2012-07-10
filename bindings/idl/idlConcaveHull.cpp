@@ -23,6 +23,24 @@
 int
 idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha)
 {
+  // Setup point clouds
+
+  std::cout << "Computing concave hull of " << IDL_STRING_STR(input) << " with an alpha of " << *alpha << " and writing result as " << IDL_STRING_STR(output) << std::endl;
+
+  pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
+  pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_projected(new pcl::PointCloud<pcl::PointXYZI>);
+
+  liblas::Header header;
+  geopcl::LAStoPCD(IDL_STRING_STR(input), header, *cloud);
+
+  // effectively demean the data
+  for (size_t i = 0; i < cloud->points.size(); ++i)
+  {
+    cloud->points[i].x -= header.GetOffsetX();
+    cloud->points[i].y -= header.GetOffsetY();
+    cloud->points[i].z -= header.GetOffsetZ();
+  }
+
   // Setup OGR
   const char *driver_name = "KML";
   OGRSFDriver *driver;
@@ -45,24 +63,29 @@ idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha
     return 1;
   }
 
+  OGRSpatialReference input_srs;
+  input_srs.SetFromUserInput(header.GetSRS().GetWKT().c_str());
+
+  std::cout << header.GetSRS().GetWKT() << std::endl;
+
+  OGRSpatialReference *output_srs;
+  output_srs = input_srs.CloneGeogCS();
+
+  OGRCoordinateTransformation *UTMtoLL = OGRCreateCoordinateTransformation(&input_srs, output_srs);
+  if (UTMtoLL == NULL)
+  {
+    std::cout << "Error creating UTM to Lat/Lon transformation." << std::endl;
+    return 1;
+  }
+
   OGRLayer *layer;
 
-  layer = source->CreateLayer( "polygon_out", NULL, wkbPolygon, NULL);
+  layer = source->CreateLayer( "polygon_out", output_srs, wkbPolygon, NULL);
   if (layer == NULL)
   {
     std::cout << "Layer creation failed." << std::endl;
     return 1;
   }
-
-  // Setup point clouds
-
-  std::cout << "Computing concave hull of " << IDL_STRING_STR(input) << " with an alpha of " << *alpha << " and writing result as " << IDL_STRING_STR(output) << std::endl;
-
-  pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
-  pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_projected(new pcl::PointCloud<pcl::PointXYZI>);
-
-  liblas::Header header;
-  geopcl::LAStoPCD(IDL_STRING_STR(input), header, *cloud);
 
   // Create a set of planar coefficients with X=0, Y=0, Z=1, i.e., the XY plane
   pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients());
@@ -83,56 +106,57 @@ idlConcaveHullnatural(IDL_STRING *input, IDL_STRING *output, const double *alpha
   pcl::ConcaveHull<pcl::PointXYZI> chull;
   chull.setInputCloud(cloud_projected);
   chull.setAlpha(*alpha);
-//  chull.reconstruct(*cloud_hull);
+  chull.reconstruct(*cloud_hull);
 
   std::cerr << "Concave hull has: " << cloud_hull->points.size()
             << " data points." << std::endl;
 
 //  geopcl::PCDtoLAS(IDL_STRING_STR(output), header, *cloud_hull);
 
-  OGRSpatialReference input_srs;
-  input_srs.SetFromUserInput(header.GetSRS().GetWKT().c_str());
+  OGRFeature *feature;
 
-  std::cout << header.GetSRS().GetWKT().c_str() << std::endl;
+  feature = OGRFeature::CreateFeature(layer->GetLayerDefn());
 
-  OGRSpatialReference *output_srs;
-  output_srs = input_srs.CloneGeogCS();
-
-  OGRCoordinateTransformation *UTMtoLL = OGRCreateCoordinateTransformation(&input_srs, output_srs);
-  if (UTMtoLL == NULL)
-  {
-    std::cout << "Error creating UTM to Lat/Lon transformation." << std::endl;
-    return 1;
-  }
-
+  OGRLinearRing ring;
+  
   for (size_t i = 0; i < cloud_hull->points.size(); ++i)
   {
     double lat, lon;
-    lat = cloud_hull->points[i].y;
-    lon = cloud_hull->points[i].x;
+    lat = cloud_hull->points[i].y + header.GetOffsetY();
+    lon = cloud_hull->points[i].x + header.GetOffsetX();
+
+//    std::cout << lon << " " << lat << std::endl;
 
     if (UTMtoLL->Transform(1, &lon, &lat))
     {
-      OGRFeature *feature;
-
-      feature = OGRFeature::CreateFeature(layer->GetLayerDefn());
-
       OGRPoint pt;
 
-      pt.setX(cloud_hull->points[i].x);
-      pt.setY(cloud_hull->points[i].y);
+      pt.setX(lon);
+      pt.setY(lat);
 
-      feature->SetGeometry(&pt);
+//      std::cout << 
 
-      if (layer->CreateFeature(feature) != OGRERR_NONE)
-      {
-        std::cout << "Failed to create feature in shapefile." << std::endl;
-        return 1;
-      }
-
-      OGRFeature::DestroyFeature(feature);
+      ring.addPoint(&pt);
     }
   }
+
+  OGRPolygon poly;
+  
+  poly.addRing(&ring);
+      
+  if (feature->SetGeometry(&poly) != OGRERR_NONE)
+  {
+    std::cout << "Failed to set geometry in feature." << std::endl;
+    return 1;
+  }
+
+  if (layer->CreateFeature(feature) != OGRERR_NONE)
+  {
+    std::cout << "Failed to create feature in shapefile." << std::endl;
+    return 1;
+  }
+
+  OGRFeature::DestroyFeature(feature);
 
   OGRDataSource::DestroyDataSource(source);
 
