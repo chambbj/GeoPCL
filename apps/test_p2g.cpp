@@ -27,15 +27,14 @@
  */
 
 #include <iostream>
+#include <string>
 
 #include <liblas/liblas.hpp>
 
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 
-//#include <geopcl/io/PCDtoLAS.hpp>
 #include <geopcl/io/LAStoPCD.hpp>
-//#include <geopcl/filter/points_to_grid.hpp>
 #include <geopcl/filter/p2g.hpp>
 
 int main(int argc, char **argv)
