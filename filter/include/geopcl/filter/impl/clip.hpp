@@ -54,7 +54,7 @@ geopcl::ClipFilter<PointT>::applyFilter(PointCloud &output)
   std::vector<boost::int32_t> p_indices;
   p_indices.clear();
   pcl::getPointsInBox((*input_), min_pt, max_pt, p_indices);
-  
+
   if (p_indices.size() == 0)
   {
     std::cerr << "No points found in the specified bounding box!" << std::endl;
