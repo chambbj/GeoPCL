@@ -54,3 +54,13 @@
 * merge files
 * split files
 * compress files
+
+# Other
+
+* segmentation
+* classification
+* registration
+* model generation
+* shape recognition
+* denoising
+* streaming/out-of-core variants for large datasets
