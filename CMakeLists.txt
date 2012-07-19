@@ -19,6 +19,49 @@ option(WITH_P2G "Build with points2grid?" OFF)
 mark_as_advanced(WITH_P2G)
 
 #------------------------------------------------------------------------------
+# installation path settings
+#------------------------------------------------------------------------------
+
+if(WIN32)
+  set(DEFAULT_LIB_SUBDIR lib)
+  set(DEFAULT_DATA_SUBDIR .)
+  set(DEFAULT_INCLUDE_SUBDIR include)
+
+  if (MSVC)
+    set(DEFAULT_BIN_SUBDIR bin)
+  else()
+    set(DEFAULT_BIN_SUBDIR .)
+  endif()
+else()
+  # Common locatoins for Unix and Mac OS X
+  set(DEFAULT_BIN_SUBDIR bin)
+  set(DEFAULT_LIB_SUBDIR lib)
+  set(DEFAULT_DATA_SUBDIR share/blu)
+  set(DEFAULT_INCLUDE_SUBDIR include)
+endif()
+
+# Locations are changeable by user to customize layout of blu installation
+# (default values are platform-specific)
+set(GEOPCL_BIN_SUBDIR ${DEFAULT_BIN_SUBDIR} CACHE STRING
+  "Subdirectory where executables will be installed")
+set(GEOPCL_LIB_SUBDIR ${DEFAULT_LIB_SUBDIR} CACHE STRING
+  "Subdirectory where libraries will be installed")
+set(GEOPCL_INCLUDE_SUBDIR ${DEFAULT_INCLUDE_SUBDIR} CACHE STRING
+  "Subdirectory where header files will be installed")
+set(GEOPCL_DATA_SUBDIR ${DEFAULT_DATA_SUBDIR} CACHE STRING
+  "Subdirectory where data will be installed")
+
+# Mark *_SUBDIR variables as advanced and dedicated to use by power-users only.
+mark_as_advanced(GEOPCL_BIN_SUBDIR
+  GEOPCL_LIB_SUBDIR GEOPCL_INCLUDE_SUBDIR GEOPCL_DATA_SUBDIR)
+
+# Full paths for the installation
+set(GEOPCL_BIN_DIR ${GEOPCL_BIN_SUBDIR})
+set(GEOPCL_LIB_DIR ${GEOPCL_LIB_SUBDIR})
+set(GEOPCL_INCLUDE_DIR ${GEOPCL_INCLUDE_SUBDIR})
+set(GEOPCL_DATA_DIR ${GEOPCL_DATA_SUBDIR})
+
+#------------------------------------------------------------------------------
 # settings for Boost dependencies
 #------------------------------------------------------------------------------
 
@@ -104,11 +147,18 @@ endif(WITH_P2G)
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
 include_directories(${CMAKE_SOURCE_DIR}/filter/include)
 
+set(GEOPCL_FILTERS_LIB_NAME geopcl_filters)
+add_subdirectory(${CMAKE_SOURCE_DIR}/filter/src)
+
 if(WITH_IDL)
   include_directories(${IDL_INCLUDE_DIR})
   set(IDL_LIB_NAME geopcl_idl_bindings)
-  add_subdirectory(bindings/idl)
+  add_subdirectory(${CMAKE_SOURCE_DIR}/bindings/idl)
 endif(WITH_IDL)
+
+set(LASCLIP lasclip)
+add_executable(${LASCLIP} apps/clip.cpp)
+target_link_libraries(${LASCLIP} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY} ${GEOPCL_FILTERS_LIB_NAME})
 
 set(LASTOPCD lastopcd)
 add_executable(${LASTOPCD} apps/LAStoPCD.cpp)
@@ -132,6 +182,6 @@ if(WITH_P2G)
   target_link_libraries(${TESTP2G} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY} ${P2G_LIBRARY})
 endif(WITH_P2G)
 
-install(TARGETS ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST} ${TESTP2G}
+install(TARGETS ${LASCLIP} ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST} ${TESTP2G}
   RUNTIME DESTINATION ${INSTALL_DIR})
 

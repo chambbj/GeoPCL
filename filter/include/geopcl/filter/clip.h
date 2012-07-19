@@ -29,8 +29,6 @@
 #ifndef INCLUDED_CLIP_H
 #define INCLUDED_CLIP_H
 
-#include <string>
-
 #include <pcl/filters/filter.h>  // Filter, input_, indices_
 #include <pcl/point_cloud.h>     // PointCloud
 

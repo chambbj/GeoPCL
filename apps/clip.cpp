@@ -48,12 +48,12 @@ main(int argc, char **argv)
 
   fs::path input = argv[1];
   fs::path output = argv[2];
-  boost::int32_t xmin = atoi(argv[3]);
-  boost::int32_t xmax = atoi(argv[4]);
-  boost::int32_t ymin = atoi(argv[5]);
-  boost::int32_t ymax = atoi(argv[6]);
-  boost::int32_t zmin = atoi(argv[7]);
-  boost::int32_t zmax = atoi(argv[8]);
+  float xmin = atof(argv[3]);
+  float xmax = atof(argv[4]);
+  float ymin = atof(argv[5]);
+  float ymax = atof(argv[6]);
+  float zmin = atof(argv[7]);
+  float zmax = atof(argv[8]);
 
   if (fs::is_regular_file(input) && (fs::extension(input) == ".las"))
   {
@@ -86,6 +86,12 @@ main(int argc, char **argv)
      */
     clip.setInputCloud(icloud);
     clip.filter(*ocloud);
+
+    if (ocloud->points.size() == 0)
+    {
+      std::cerr << "Unable to create clipped point cloud." << std::endl;
+      return (1);
+    }
 
     /*
      * Write the filtered cloud to disk.
