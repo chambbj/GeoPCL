@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>GeoPCL</title>
+  <title>ground filtering - GeoPCL</title>
   <meta name="author" content="Bradley J Chambers">
 
   
-  <meta name="description" content="GeoPCL is a collection of geospatial extensions to the Point Cloud Library
-(PCL). GeoPCL depends on PCL, as well as libLAS, PDAL, and points2grid. &hellip;">
+  <meta name="description" content="Ground Filtering Evans, Jeffrey S.; Hudak, Andrew T. 2007. A multiscale curvature algorithm for classifying discrete return LiDAR in forested &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://chambbj.github.com/GeoPCL/">
+  <link rel="canonical" href="http://chambbj.github.com/GeoPCL/ground-filtering/">
   <link href="/GeoPCL/favicon.png" rel="icon">
   <link href="/GeoPCL/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/GeoPCL/javascripts/modernizr-2.0.js"></script>
@@ -85,56 +84,21 @@
       <div>
 <article role="article">
   
-  <p>GeoPCL is a collection of geospatial extensions to the Point Cloud Library
-(PCL). GeoPCL depends on PCL, as well as libLAS, PDAL, and points2grid. To
-build the IDL bindings, one must have IDL installed.</p>
+  <header>
+    <h1 class="entry-title">Ground Filtering</h1>
+    
+  </header>
+  
+  <ol>
+<li><p>Evans, Jeffrey S.; Hudak, Andrew T. 2007. A multiscale curvature algorithm for classifying discrete return LiDAR in forested environments. IEEE Transactions on Geoscience and Remote Sensing. 45(4): 1029-1038.</p></li>
+<li><p>Bartels, Marc; Wei, Hong. 2006. Segmentation of LIDAR data using measures of distribution. International Archives of Photogrammetry, Remote Sensing and Spatial Information Sciences. 36(7): 426-431.</p></li>
+<li><p>Xu, Liang; Yang, Yan; Tian, Qingjiu. 2007. A wavelet based algorithm for DTM extraction from airborne laser scanning data. Geoinformatics 2007: Remotely Sensed Data and Information. Proc. of SPIE Vol. 6752: 67521V.</p></li>
+<li><p>Meng, Xuelian; Wang, Le; Silvan-Cardenas, Jose L.; Currit, Nate. 2009. A multi-directional ground filtering algorithm for airborne LIDAR. ISPRS Journal of Photogrammetry and Remote Sensing. 64: 117-124.</p></li>
+<li><p>Zhang, Keqi; Chen, Shu-Ching; Whitman, Dean; Shyu, Mei-Ling; Yan, Jianhua; Zhang, Chengcui. 2003. A progressive morphological filter for removing nonground measurements from airborne LIDAR data. IEEE Transactions on Geoscience and Remote Sensing. 41(4): 872-882.</p></li>
+<li><p>Axelsson, Peter. 2000. DEM generation from laser scanning data using adaptive TIN models. International Archives of Photogrammetry and Remote Sensing. 33(B4): 110-117.</p></li>
+<li><p>Haugerud, R.A.; Harding, D.J.. 2001. Some algorithms for virtual deforestation (VDF) of lidar topographic survey data. International Archives of Photogrammetry and Remote Sensing. 34(3/W4): 211-218.</p></li>
+</ol>
 
-<p>GeoPCL can open point cloud data in the LAS format (XYZ and intensity fields
-only) and convert it to the PCD format used internally by PCL. PDAL supported
-formats can be converted as well. Once the data has been processed by PCL, it
-can then be converted back to LAS for export.</p>
-
-<p>GeoPCL&#8217;s IDL bindings are intended to be used to expose PCL modules to IDL
-users. There are currently two IDL bindings, an LAS to PCD conversion example
-and a convex hull calculation.</p>
-
-<p>GeoPCL has a native implementation of a gridding algorithm and also links to
-the point2grid library for more advanced gridding approaches (e.g., min, max,
-average, IDW, &#8230;).</p>
-
-<p>Future releases of GeoPCL will extend the ability to perform common geospatial
-processing tasks for point cloud data, such as feature extraction and ground
-return filtering.</p>
-
-<h2>License</h2>
-
-<p>GeoPCL is released under the terms of the <strong>BSD license</strong>.</p>
-
-<pre><code>Copyright (c) 2012, Bradley J Chambers
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-</code></pre>
 
   
     <footer>
@@ -142,7 +106,7 @@ POSSIBILITY OF SUCH DAMAGE.
       
         <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://chambbj.github.com/GeoPCL/index.html" data-via="" data-counturl="http://chambbj.github.com/GeoPCL/index.html" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://chambbj.github.com/GeoPCL/ground-filtering/index.html" data-via="" data-counturl="http://chambbj.github.com/GeoPCL/ground-filtering/index.html" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>

@@ -1,15 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://chambbj.github.com/GeoPCL/about/</loc>
-        <lastmod>2012-07-09T08:37:37-04:00</lastmod>
-    </url>
-    <url>
         <loc>http://chambbj.github.com/GeoPCL/blog/archives/</loc>
         <lastmod>2012-07-09T08:37:37-04:00</lastmod>
     </url>
     <url>
-        <loc>http://chambbj.github.com/GeoPCL/</loc>
+        <loc>http://chambbj.github.com/GeoPCL/blog/</loc>
         <lastmod>2012-07-09T08:37:37-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://chambbj.github.com/GeoPCL/core-development/</loc>
+        <lastmod>2012-07-30T11:46:15-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://chambbj.github.com/GeoPCL/ground-filtering/</loc>
+        <lastmod>2012-07-30T12:23:25-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://chambbj.github.com/GeoPCL/idl-bindings/</loc>
+        <lastmod>2012-07-30T11:47:40-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://chambbj.github.com/GeoPCL/</loc>
+        <lastmod>2012-07-30T10:38:15-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://chambbj.github.com/GeoPCL/tutorial/</loc>
+        <lastmod>2012-07-30T10:21:30-04:00</lastmod>
     </url>
 </urlset>
