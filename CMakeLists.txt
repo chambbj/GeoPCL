@@ -144,6 +144,14 @@ if(WITH_P2G)
   add_definitions(${P2G_DEFINITIONS})
 endif(WITH_P2G)
 
+#------------------------------------------------------------------------------
+# settings for Eigen dependencies
+#------------------------------------------------------------------------------
+find_package(Eigen REQUIRED)
+include_directories(SYSTEM ${EIGEN_INCLUDE_DIRS})
+add_definitions(-DEIGEN_USE_NEW_STDVECTOR
+                -DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET)
+
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
 include_directories(${CMAKE_SOURCE_DIR}/filter/include)
 
@@ -169,12 +177,15 @@ add_executable(${PCDTOLAS} apps/PCDtoLAS.cpp)
 target_link_libraries(${PCDTOLAS} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 
 set(PDALTOPCD pdaltopcd)
-add_executable(${PDALTOPCD} apps/PDALtoPCD.cpp)
-target_link_libraries(${PDALTOPCD} ${PCL_LIBRARIES} ${PDAL_LIBRARY})
+#add_executable(${PDALTOPCD} apps/PDALtoPCD.cpp)
+#target_link_libraries(${PDALTOPCD} ${PCL_LIBRARIES} ${PDAL_LIBRARY})
 
 set (TEST test)
 add_executable(${TEST} apps/test.cpp)
 target_link_libraries(${TEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
+
+set(HILLSHADE test_hillshade)
+add_executable(${HILLSHADE} apps/test_hillshade.cpp)
 
 if(WITH_P2G)
   set (TESTP2G test_p2g)
@@ -182,6 +193,13 @@ if(WITH_P2G)
   target_link_libraries(${TESTP2G} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY} ${P2G_LIBRARY})
 endif(WITH_P2G)
 
-install(TARGETS ${LASCLIP} ${LASTOPCD} ${PCDTOLAS} ${PDALTOPCD} ${TEST} ${TESTP2G}
+install(TARGETS
+  ${LASCLIP}
+  ${LASTOPCD}
+  ${PCDTOLAS}
+#  ${PDALTOPCD}
+  ${TEST}
+  ${HILLSHADE}
+  ${TESTP2G}
   RUNTIME DESTINATION ${INSTALL_DIR})
 
