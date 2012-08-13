@@ -67,7 +67,7 @@ main(int argc, char **argv)
 
     liblas::Header header;
 
-    geopcl::LAStoPCD(input.c_str(), header, *icloud);
+    geopcl::LAStoPCD(input.string().c_str(), header, *icloud);
 
     /*
      * Create the clipping filter, subtracting offsets from the user
@@ -96,7 +96,7 @@ main(int argc, char **argv)
     /*
      * Write the filtered cloud to disk.
      */
-    geopcl::PCDtoLAS(output.c_str(), header, *ocloud);
+    geopcl::PCDtoLAS(output.string().c_str(), header, *ocloud);
   }
 
   return (0);
