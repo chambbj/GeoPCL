@@ -67,26 +67,15 @@ namespace geopcl
       return;
     }
 
-    // need to handle the header a bit more intelligently, e.g., assuming the
-    // following workflow:
-    //
-    // LAStoPCD(fname, *cloud);
-    // ...some work on *cloud
-    // PCDtoLAS(fname, *cloud);
-    //
-    // we should probably return the header in the first step, and pass it to
-    // the final step to retain as much file level information as possible
-    //liblas::Header header;
+//    liblas::PointFormatName format = liblas::ePointFormat0;
+    // not quite ready to handle the other point formats
 
-    liblas::PointFormatName format = liblas::ePointFormat0;
-    // not quite ready to hanlde the other point formats
+//    header.SetVersionMinor(2);
+//    header.SetDataFormatId(format);
 
-    header.SetVersionMinor(2);
-    header.SetDataFormatId(format);
-
-    double scale = 1.0;
-    header.SetScale(scale, scale, scale);
-    header.SetOffset(0.0, 0.0, 0.0);
+//    double scale = 1.0;
+//    header.SetScale(scale, scale, scale);
+//    header.SetOffset(0.0, 0.0, 0.0);
     header.SetPointRecordsCount(cloud.points.size());
 
     liblas::Writer *writer = new liblas::Writer(ofs, header);
@@ -122,6 +111,7 @@ namespace geopcl
       }
     }
 
+    // Repair header
     for (boost::uint32_t i = 0; i < 5; i++)
     {
       header.SetPointRecordsByReturnCount(i, 0);
@@ -170,14 +160,7 @@ namespace geopcl
       delete writer;
     }
 
-//    if (ofs != 0)
-//    {
-//      liblas::Cleanup(ofs);
-//    }
-
-//    liblas::Header hnew = liblas::FetchHeader(output.c_str());
-//    liblas::RepairHeader(*summary, hnew);
-//    liblas::RewriteHeader(hnew, output.c_str());
+    ofs.close();
 
     // same for RGB - although there is a mismatch between PCL's assumption
     // that RGB will be 8 bits/channel and LAS's specification that RGB will be
