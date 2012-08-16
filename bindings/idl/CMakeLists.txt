@@ -2,6 +2,7 @@ set(IDL_SOURCES
   idlConcaveHull.cpp
   idlConvexHull.cpp
   idlLAStoPCD.cpp
+  idlVoxelGrid.cpp
  )
 
 add_library(${IDL_LIB_NAME} SHARED ${IDL_SOURCES})
