@@ -58,13 +58,13 @@ int main(int argc, char **argv)
   }
 
   std::string input = argv[1];
-  
+
   std::cout << "Reading " << input << " and generating a 10 meter hillshade" << std::endl;
 
   pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
 
   Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> grid;
-  
+
   liblas::Header header;
 
   geopcl::LAStoPCD(input, header, *cloud);

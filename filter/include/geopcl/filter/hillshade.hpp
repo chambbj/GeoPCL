@@ -51,39 +51,42 @@ namespace geopcl
     double zenith_rad = zenith_deg * kPI / 180.0;
 
     double azimuth_math = 360.0 - azimuth + 90.0;
+
     if (azimuth_math > 360.0) azimuth_math -= 360.0;
+
     double azimuth_rad = azimuth_math * kPI / 180.0;
 
     double z_factor = 1.0;
 
     double cellsize = 5.0;
-    
+
     Eigen::MatrixBase<Derived> &hillshade = const_cast<Eigen::MatrixBase<Derived>& >(hillshade_);
     hillshade.derived().resize(surface.rows(), surface.cols());
     hillshade.setConstant(0);
 
-    for (boost::int32_t r = 1; r < surface.rows()-1; ++r)
+    for (boost::int32_t r = 1; r < surface.rows() - 1; ++r)
     {
-      for (boost::int32_t c = 1; c < surface.cols()-1; ++c)
+      for (boost::int32_t c = 1; c < surface.cols() - 1; ++c)
       {
-        double dzdx = ((surface(r-1,c+1) + 2*surface(r,c+1) + surface(r+1,c+1)) -
-          (surface(r-1,c-1) + 2*surface(r,c-1) + surface(r+1,c-1))) /
-          (8 * cellsize);
+        double dzdx = ((surface(r - 1, c + 1) + 2 * surface(r, c + 1) + surface(r + 1, c + 1)) -
+                       (surface(r - 1, c - 1) + 2 * surface(r, c - 1) + surface(r + 1, c - 1))) /
+                      (8 * cellsize);
 
-        double dzdy = ((surface(r+1,c-1) + 2*surface(r+1,c) + surface(r+1,c+1)) -
-          (surface(r-1,c-1) + 2*surface(r-1,c) + surface(r-1,c+1))) /
-          (8 * cellsize);
+        double dzdy = ((surface(r + 1, c - 1) + 2 * surface(r + 1, c) + surface(r + 1, c + 1)) -
+                       (surface(r - 1, c - 1) + 2 * surface(r - 1, c) + surface(r - 1, c + 1))) /
+                      (8 * cellsize);
 
-        double slope_rad = std::atan(z_factor * std::sqrt(dzdx*dzdx + dzdy*dzdy));
+        double slope_rad = std::atan(z_factor * std::sqrt(dzdx * dzdx + dzdy * dzdy));
 
         double aspect_rad = 0.0;
 
         if (std::abs(dzdx) > 0.0)
         {
           aspect_rad = std::atan2(dzdy, -dzdx);
+
           if (aspect_rad < 0.0)
           {
-            aspect_rad = 2*kPI + aspect_rad;
+            aspect_rad = 2 * kPI + aspect_rad;
           }
         }
         else
@@ -94,13 +97,14 @@ namespace geopcl
           }
           else if (dzdy < 0.0)
           {
-            aspect_rad = 2.0*kPI - kPI/2.0;
+            aspect_rad = 2.0 * kPI - kPI / 2.0;
           }
+
           // else aspect_rad = aspect_rad; ??
         }
 
-        hillshade(r,c) = 255.0*((std::cos(zenith_rad)*std::cos(slope_rad))+
-          (std::sin(zenith_rad)*std::sin(slope_rad)*std::cos(azimuth_rad-aspect_rad)));
+        hillshade(r, c) = 255.0 * ((std::cos(zenith_rad) * std::cos(slope_rad)) +
+                                   (std::sin(zenith_rad) * std::sin(slope_rad) * std::cos(azimuth_rad - aspect_rad)));
       }
     }
   }

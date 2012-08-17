@@ -51,7 +51,7 @@ namespace geopcl
     // Get rows and columns from the input matrix
     int rows = m.rows();
     int cols = m.cols();
-    
+
     // Setup GDAL
     GDALAllRegister();
 
@@ -62,30 +62,32 @@ namespace geopcl
     GDALDriver *poDriver;
     GDALDataset *poDstDS;
     GDALRasterBand *poBand;
-    
+
     // Attempt to get the driver
     poDriver = GetGDALDriverManager()->GetDriverByName(pszFormat);
+
     if (poDriver == NULL)
     {
       std::cerr << "Could not get driver " << pszFormat << "." << std::endl;
       return;
     }
-    
+
     // Check that the driver supports the Create() method
     papszMetadata = poDriver->GetMetadata();
+
     if (!CSLFetchBoolean(papszMetadata, GDAL_DCAP_CREATE, FALSE))
     {
       std::cerr << "Driver " << pszFormat << " does not support Create() method." << std::endl;
       return;
     }
-    
+
     // Create the raster output
     poDstDS = poDriver->Create(pszDstFilename, cols, rows, 1, GDT_Float32, papszOptions);
-    
+
     // Write data to the raster
     poBand = poDstDS->GetRasterBand(1);
-    poBand->RasterIO( GF_Write, 0, 0, cols, rows, m.data(), cols, rows, GDT_Float32, 0, 0);
-    
+    poBand->RasterIO(GF_Write, 0, 0, cols, rows, m.data(), cols, rows, GDT_Float32, 0, 0);
+
     // Close the raster
     GDALClose((GDALDatasetH) poDstDS);
   }

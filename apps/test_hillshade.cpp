@@ -36,8 +36,8 @@ int main(int argc, char **argv)
 {
   Eigen::Matrix3d m1;
   m1 << 2450, 2461, 2483,
-        2452, 2461, 2483,
-        2447, 2455, 2477;
+     2452, 2461, 2483,
+     2447, 2455, 2477;
 
   Eigen::Matrix3d m2;
 

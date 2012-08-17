@@ -68,11 +68,11 @@ extern "C" {
     std::cout << "Point cloud after filtering: " << cloud_filtered->points.size()
               << " data points." << std::endl;
 
-std::cout << "version minor: " << header.GetVersionMinor() << std::endl;
-std::cout << "format: " << header.GetDataFormatId() << std::endl;
-std::cout << "x scale / offset: " << header.GetScaleX() << " " << header.GetOffsetX() << std::endl;
-std::cout << "y scale / offset: " << header.GetScaleY() << " " << header.GetOffsetY() << std::endl;
-std::cout << "z scale / offset: " << header.GetScaleZ() << " " << header.GetOffsetZ() << std::endl;
+    std::cout << "version minor: " << header.GetVersionMinor() << std::endl;
+    std::cout << "format: " << header.GetDataFormatId() << std::endl;
+    std::cout << "x scale / offset: " << header.GetScaleX() << " " << header.GetOffsetX() << std::endl;
+    std::cout << "y scale / offset: " << header.GetScaleY() << " " << header.GetOffsetY() << std::endl;
+    std::cout << "z scale / offset: " << header.GetScaleZ() << " " << header.GetOffsetZ() << std::endl;
 
     geopcl::PCDtoLAS(IDL_STRING_STR(output), header, *cloud_filtered);
 
