@@ -29,17 +29,14 @@
 #ifndef INCLUDED_POINTS_TO_GRID_HPP
 #define INCLUDED_POINTS_TO_GRID_HPP
 
-//#include <fstream>
 #include <iostream>
 #include <limits>
-//#include <string>
 
-//#include <liblas/liblas.hpp>
+#include <Eigen/Core>
 
 #include <pcl/common/common.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
-//#include <pcl/point_traits.h>
 
 namespace geopcl
 {
@@ -48,8 +45,8 @@ namespace geopcl
    *
    * Rasterize point cloud.
    */
-  template <typename CloudT>
-  void PointsToGrid(const CloudT &cloud, float resolution, CloudT &grid)
+  template <typename CloudT, typename Derived>
+  void PointsToGrid(const CloudT &cloud, float resolution, const Eigen::MatrixBase<Derived> &grid_)
   {
     std::cout << resolution << " meters" << std::endl;
 
@@ -64,32 +61,17 @@ namespace geopcl
     /*
      * Compute size of grid.
      */
-    boost::int32_t xsize = std::ceil((max_pt.x - min_pt.x) / resolution);
-    boost::int32_t ysize = std::ceil((max_pt.y - min_pt.y) / resolution);
-    std::cout << xsize << " x bins" << std::endl;
-    std::cout << ysize << " y bins" << std::endl;
+    boost::int32_t cols = std::ceil((max_pt.x - min_pt.x) / resolution);
+    boost::int32_t rows = std::ceil((max_pt.y - min_pt.y) / resolution);
+    std::cout << cols << " x bins (cols)" << std::endl;
+    std::cout << rows << " y bins (rows)" << std::endl;
 
     /*
      * Initialize grid.
      */
-    grid.width = xsize;
-    grid.height = ysize;
-    grid.is_dense = false;
-    grid.points.resize(cloud.width * grid.height);
-    std::cout << grid.points.size() << " points" << std::endl;
-
-    for (size_t x = 0; x < xsize; ++x)
-    {
-      for (size_t y = 0; y < ysize; ++y)
-      {
-        size_t idx = x + (y * xsize);
-        grid.points[idx].x = min_pt.x + (x * resolution);
-        grid.points[idx].y = min_pt.y + (y * resolution);
-        grid.points[idx].z = std::numeric_limits<float>::max();
-      }
-    }
-
-    std::cout << grid.points[0] << std::endl;
+    Eigen::MatrixBase<Derived> &grid = const_cast<Eigen::MatrixBase<Derived>& >(grid_);
+    grid.derived().resize(rows, cols);
+    grid.setConstant(std::numeric_limits<boost::int32_t>::max());
 
     /*
      * Loop over point cloud and compute grid minimums.
@@ -101,12 +83,11 @@ namespace geopcl
       boost::int32_t xbin = std::floor((p.x - min_pt.x) / resolution);
       boost::int32_t ybin = std::floor((p.y - min_pt.y) / resolution);
 
-      size_t idx = xbin + (ybin * xsize);
-
-      if (p.z < grid.points[idx].z) grid.points[idx].z = p.z;
+      if (p.z < grid(ybin, xbin))
+      {
+        grid(ybin, xbin) = p.z;
+      }
     }
-
-    std::cout << grid.points[0] << std::endl;
   }
 }  // geopcl
 
