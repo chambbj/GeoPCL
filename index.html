@@ -9,8 +9,7 @@
   <meta name="author" content="Bradley J Chambers">
 
   
-  <meta name="description" content="GeoPCL is a collection of geospatial extensions to the Point Cloud Library
-(PCL). GeoPCL depends on PCL, as well as libLAS, PDAL, and points2grid. &hellip;">
+  <meta name="description" content="GeoPCL is a collection of geospatial extensions to the Point Cloud Library (PCL). GeoPCL depends on PCL, as well as libLAS, PDAL, and points2grid. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -52,7 +51,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/GeoPCL/">GeoPCL</a></h1>
+  <h1 style="font-size:285%"><a href="/GeoPCL/">GeoPCL</a></h1>
   
     <h2>geospatial extensions for PCL</h2>
   
@@ -85,26 +84,15 @@
       <div>
 <article role="article">
   
-  <p>GeoPCL is a collection of geospatial extensions to the Point Cloud Library
-(PCL). GeoPCL depends on PCL, as well as libLAS, PDAL, and points2grid. To
-build the IDL bindings, one must have IDL installed.</p>
+  <p>GeoPCL is a collection of geospatial extensions to the <a href="http://www.pointclouds.org">Point Cloud Library (PCL)</a>. GeoPCL depends on PCL, as well as <a href="http://www.liblas.org">libLAS</a>, <a href="http://www.pointcloud.org">PDAL</a>, and <a href="https://github.com/CRREL/points2grid">points2grid</a>. To build the <a href="http://www.exelisvis.com/ProductsServices/IDL.aspx">IDL</a> bindings, one must have IDL installed.</p>
 
-<p>GeoPCL can open point cloud data in the LAS format (XYZ and intensity fields
-only) and convert it to the PCD format used internally by PCL. PDAL supported
-formats can be converted as well. Once the data has been processed by PCL, it
-can then be converted back to LAS for export.</p>
+<p>GeoPCL can open point cloud data in the <a href="http://www.asprs.org/Committee-General/LASer-LAS-File-Format-Exchange-Activities.html">LAS</a> format (XYZ and intensity fields only) and convert it to the PCD format used internally by PCL. PDAL supported formats can be converted as well. Once the data has been processed by PCL, it can then be converted back to LAS for export.</p>
 
-<p>GeoPCL&#8217;s IDL bindings are intended to be used to expose PCL modules to IDL
-users. There are currently two IDL bindings, an LAS to PCD conversion example
-and a convex hull calculation.</p>
+<p>GeoPCL&#8217;s IDL bindings are intended to be used to expose PCL modules to IDL users. There are currently two IDL bindings, an LAS to PCD conversion example and a convex hull calculation.</p>
 
-<p>GeoPCL has a native implementation of a gridding algorithm and also links to
-the point2grid library for more advanced gridding approaches (e.g., min, max,
-average, IDW, &#8230;).</p>
+<p>GeoPCL has a native implementation of a gridding algorithm and also links to the points2grid library for more advanced gridding approaches (e.g., min, max, average, IDW, &#8230;).</p>
 
-<p>Future releases of GeoPCL will extend the ability to perform common geospatial
-processing tasks for point cloud data, such as feature extraction and ground
-return filtering.</p>
+<p>Future releases of GeoPCL will extend the ability to perform common geospatial processing tasks for point cloud data, such as feature extraction and ground return filtering.</p>
 
 <h2>License</h2>
 
@@ -162,35 +150,6 @@ POSSIBILITY OF SUCH DAMAGE.
 <aside class="sidebar">
   
     
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/chambbj">@chambbj</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'chambbj',
-            count: 10,
-            skip_forks: false,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/GeoPCL/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
 
 
 
