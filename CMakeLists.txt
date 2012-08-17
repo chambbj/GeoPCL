@@ -187,6 +187,10 @@ target_link_libraries(${TEST} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY})
 set(HILLSHADE test_hillshade)
 add_executable(${HILLSHADE} apps/test_hillshade.cpp)
 
+set(HILLSHADE2 test_hillshade2)
+add_executable(${HILLSHADE2} apps/test_hillshade2.cpp)
+target_link_libraries(${HILLSHADE2} ${PCL_LIBRARIES} ${LIBLAS_LIBRARY} ${GDAL_LIBRARY})
+
 if(WITH_P2G)
   set (TESTP2G test_p2g)
   add_executable(${TESTP2G} apps/test_p2g.cpp)
