@@ -45,7 +45,7 @@ namespace geopcl
    * http://webhelp.esri.com/arcgisdesktop/9.2/index.cfm?TopicName=How%20Hillshade%20works
    */
   template <typename Derived>
-  void Hillshade(const Eigen::MatrixBase<Derived> &surface, const double &altitude, const double &azimuth, Eigen::MatrixBase<Derived> &hillshade)
+  void Hillshade(const Eigen::MatrixBase<Derived> &surface, const double &altitude, const double &azimuth, const Eigen::MatrixBase<Derived> &hillshade_)
   {
     double zenith_deg = 90.0 - altitude;
     double zenith_rad = zenith_deg * kPI / 180.0;
@@ -57,6 +57,10 @@ namespace geopcl
     double z_factor = 1.0;
 
     double cellsize = 5.0;
+    
+    Eigen::MatrixBase<Derived> &hillshade = const_cast<Eigen::MatrixBase<Derived>& >(hillshade_);
+    hillshade.derived().resize(surface.rows(), surface.cols());
+    hillshade.setConstant(0);
 
     for (boost::int32_t r = 1; r < surface.rows()-1; ++r)
     {
@@ -94,15 +98,6 @@ namespace geopcl
           }
           // else aspect_rad = aspect_rad; ??
         }
-
-std::cout << "zenith deg " << zenith_deg << std::endl;
-std::cout << "zenith rad " << zenith_rad << std::endl;
-std::cout << "azimuth math " << azimuth_math << std::endl;
-std::cout << "azimuth rad " << azimuth_rad << std::endl;
-std::cout << "dx " << dzdx << std::endl;
-std::cout << "dy " << dzdy << std::endl;
-std::cout << "slope " << slope_rad << std::endl;
-std::cout << "aspect " << aspect_rad << std::endl;
 
         hillshade(r,c) = 255.0*((std::cos(zenith_rad)*std::cos(slope_rad))+
           (std::sin(zenith_rad)*std::sin(slope_rad)*std::cos(azimuth_rad-aspect_rad)));
