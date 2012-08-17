@@ -55,7 +55,7 @@ namespace geopcl
     // Setup GDAL
     GDALAllRegister();
 
-    const char* pszFormat = "GTiff";
+    const char *pszFormat = "GTiff";
     char **papszMetadata;
     char **papszOptions = NULL;
     char *pszDstFilename = const_cast<char *>(output.c_str());

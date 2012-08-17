@@ -48,15 +48,11 @@ namespace geopcl
   template <typename CloudT, typename Derived>
   void PointsToGrid(const CloudT &cloud, float resolution, const Eigen::MatrixBase<Derived> &grid_)
   {
-    std::cout << resolution << " meters" << std::endl;
-
     /*
      * Compute extents of points.
      */
     typename CloudT::PointType min_pt, max_pt; //testPoint = cloud.points[0];
     pcl::getMinMax3D(cloud, min_pt, max_pt);
-    std::cout << min_pt << std::endl;
-    std::cout << max_pt << std::endl;
 
     /*
      * Compute size of grid.
