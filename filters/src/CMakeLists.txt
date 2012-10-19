@@ -13,7 +13,7 @@
 #   GEOPCL_<dirname>_CPP - all the .cpp files for the given subdir/namespace
 #   ...
 
-set(GEOPCL_HEADERS_DIR ${CMAKE_SOURCE_DIR}/filter/include/geopcl/filter)
+set(GEOPCL_HEADERS_DIR ${CMAKE_SOURCE_DIR}/filters/include/geopcl/filters)
 set(GEOPCL_HPP "")
 set(GEOPCL_CPP "")
 

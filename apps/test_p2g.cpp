@@ -35,7 +35,7 @@
 #include <pcl/point_types.h>
 
 #include <geopcl/io/LAStoPCD.hpp>
-#include <geopcl/filter/p2g.hpp>
+#include <geopcl/filters/p2g.hpp>
 
 int main(int argc, char **argv)
 {

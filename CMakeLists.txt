@@ -153,10 +153,10 @@ add_definitions(-DEIGEN_USE_NEW_STDVECTOR
                 -DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET)
 
 include_directories(${CMAKE_SOURCE_DIR}/io/include)
-include_directories(${CMAKE_SOURCE_DIR}/filter/include)
+include_directories(${CMAKE_SOURCE_DIR}/filters/include)
 
 set(GEOPCL_FILTERS_LIB_NAME geopcl_filters)
-add_subdirectory(${CMAKE_SOURCE_DIR}/filter/src)
+add_subdirectory(${CMAKE_SOURCE_DIR}/filters/src)
 
 if(WITH_IDL)
   include_directories(${IDL_INCLUDE_DIR})

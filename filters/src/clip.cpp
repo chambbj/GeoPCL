@@ -26,8 +26,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "geopcl/filter/clip.h"
-#include "geopcl/filter/impl/clip.hpp"
+#include "geopcl/filters/clip.h"
+#include "geopcl/filters/impl/clip.hpp"
 
 #include <pcl/point_types.h>
 

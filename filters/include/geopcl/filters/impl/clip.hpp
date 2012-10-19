@@ -29,7 +29,7 @@
 #ifndef INCLUDED_CLIP_IMPL_H
 #define INCLUDED_CLIP_IMPL_H
 
-#include "geopcl/filter/clip.h"
+#include "geopcl/filters/clip.h"
 
 #include <vector>
 

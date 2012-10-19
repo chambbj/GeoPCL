@@ -32,7 +32,7 @@ namespace fs = boost::filesystem;
 
 #include <pcl/point_types.h>
 
-#include <geopcl/filter/clip.h>
+#include <geopcl/filters/clip.h>
 #include <geopcl/io/LAStoPCD.hpp>
 #include <geopcl/io/PCDtoLAS.hpp>
 

@@ -30,7 +30,7 @@
 
 #include <Eigen/Core>
 
-#include <geopcl/filter/hillshade.hpp>
+#include <geopcl/filters/hillshade.hpp>
 
 int main(int argc, char **argv)
 {

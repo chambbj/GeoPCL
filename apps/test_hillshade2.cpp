@@ -43,8 +43,8 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 
-#include <geopcl/filter/hillshade.hpp>
-#include <geopcl/filter/points_to_grid.hpp>
+#include <geopcl/filters/hillshade.hpp>
+#include <geopcl/filters/points_to_grid.hpp>
 #include <geopcl/io/LAStoPCD.hpp>
 #include <geopcl/io/EIGENtoGDAL.hpp>
 //#include <geopcl/io/GDALRaster.hpp>

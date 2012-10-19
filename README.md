@@ -9,11 +9,18 @@ GeoPCL is a collection of geospatial extensions to the Point Cloud Library
 
 * LAS to/from PCD
 * PDAL-supported formats to PCD
+* Eigen matrix to GDAL raster
 
 ### IDL Bindings
 
 * LAS to PCD
 * Convex hull
+* Concave hull
+* Voxel grid decimation
+
+### Filtering
+
+* Hillshade
 
 ### Raster Support
 
